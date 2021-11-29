@@ -1,0 +1,155 @@
+<div class="col-md-3 menu">
+    <div class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search by name" aria-label="Search" [(ngModel)]="search">
+    </div>
+</div>
+<div class="menu">
+    <div class="form-inline">
+        <a title="Agregar" role="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#createPost">
+            Agregar Cargo
+        </a>
+    </div>
+</div>
+
+<div class=" products">
+    <table class="table table-sm table-dark">
+        <thead class="thead-light textTable">
+            <tr>
+                <th scope="col">CARGO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of listPost |  paginate: { itemsPerPage: itempagePost, currentPage: page} | post:search">
+                <th scope="row">{{post.name}}</th>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-inline">
+        <div class="col-md-2 paginationPosition">Items por Pagina</div>
+        <div class="col-md-2 paginationPosition">
+            <select class="form-control" name="tableUser" [(ngModel)]="itempagePost">
+                <option value="5" selected="selected">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+        <div class="row paginationPosition">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+            </pagination-controls>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+
+<div class="col-md-3 menu">
+    <div class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search  by name" aria-label="Search"
+            [(ngModel)]="searchUser">
+    </div>
+</div>
+<div class="menu">
+    <div class="form-inline">
+        <a title="Agregar" role="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#createUser">
+            Agregar Usuario
+        </a>
+    </div>
+</div>
+
+<div class="col-md-3 products">
+    <table class="table table-sm table-dark">
+        <thead class="thead-light textTable">
+            <tr>
+                <th scope="col">USUARIO</th>
+                <th scope="col">EDAD</th>
+                <th scope="col">CARGO</th>
+                <th scope="col">FECHA DE ADMISION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of listUser |  paginate: { itemsPerPage: itempageUser, currentPage: pageUser}| users:searchUser">
+                <th scope="row">{{user.name}}</th>
+                <th scope="row">{{user.age}}</th>
+                <th scope="row">{{user.id_post.name}}</th>
+                <th scope="row">{{user.admission_date}}</th>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-inline">
+        <div class="col-md-2 paginationPosition">Items por Pagina</div>
+        <div class="col-md-2 paginationPosition">
+            <select class="form-control" name="tableUser" [(ngModel)]="itempageUser">
+                <option value="5" selected="selected">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+        <div class="row paginationPosition">
+            <pagination-controls (pageChange)="pageUser = $event" previousLabel="Anterior" nextLabel="Siguiente">
+            </pagination-controls>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE CREACION DE CARGOS  -->
+
+<div class="modal fade modalPosition" id="createPost" tabindex="-1" aria-labelledby="createPostLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modalPosition">
+        <div class="modal-content modalCreatePost">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createPostLabel">Creacion de Cargos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Digite el cargo que desea agregar</p>
+                <input type="text" class="form-control" [(ngModel)]="name">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="createPost(name)">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE CREACION DE USUARIOS  -->
+
+<div class="modal fade modalPosition" id="createUser" tabindex="-1" aria-labelledby="createUserLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modalPosition">
+        <div class="modal-content createUserLabel">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createUserLabel">Creacion de Usuarios</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Nombre del trabajador</p>
+                <input type="text" class="form-control" [(ngModel)]="user.name">
+
+                <p>Edad del trabajador</p>
+                <input type="number" class="form-control" [(ngModel)]="user.age" min="18">
+
+                <p>Fecha de ingreso a la compañia</p>
+                <input type="date" id="start" name="trip-start" [(ngModel)]="user.admission_date"
+                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" [max]="today">
+
+                <p>Cargo del trabajador</p>
+                <select class="form-control" [(ngModel)]="user.id_post">
+                    <option [value]=""></option>
+                    <option [value]="post.id" *ngFor="let post of listPost">{{post.name}}
+                    </option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="createUser(user)" data-bs-dismiss="modal">Guardar</button>
+                </div>
+        </div>
+    </div>
+</div>

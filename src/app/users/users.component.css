@@ -1,0 +1,27 @@
+.menu {
+    margin-top: 20px;
+    margin-right: 20px;
+    float: right;
+  }
+
+  .products{
+    margin-top: 100px;
+    height:10%;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .modalCreatePost{
+    width: 150%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .paginationPosition{
+    float:left;
+  }
+
+  .textTable{
+    text-align: center;
+  }
